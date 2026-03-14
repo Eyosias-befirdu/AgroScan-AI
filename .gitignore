@@ -1,0 +1,38 @@
+# Python/FastAPI
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+.env
+.pytest_cache/
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+
+# Database
+*.sqlite3
+postgres_data/
+
+# NodeJS / Frontend mock dependencies
+node_modules/
+.npm/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# MacOS
+.DS_Store

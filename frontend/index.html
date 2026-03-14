@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="AgroScan AI – AI-powered crop disease detection for Ethiopian farmers." />
+  <title>AgroScan AI – Crop Disease Detection</title>
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="translations.js"></script>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <img src="assets/logo.png" alt="AgroScan AI Logo" class="nav-logo" />
+        <span class="nav-title">AgroScan <span class="highlight">AI</span></span>
+      </div>
+      <div class="nav-links">
+        <a href="#hero" class="nav-link active" data-i18n="nav.home">Home</a>
+        <a href="#how-it-works" class="nav-link" data-i18n="nav.how">How It Works</a>
+        <a href="#scanner" class="nav-link" data-i18n="nav.scan">Scan Now</a>
+        <a href="#crops" class="nav-link" data-i18n="nav.crops">Crops</a>
+        <a href="#about" class="nav-link" data-i18n="nav.about">About</a>
+        <select id="globalLang" class="nav-lang">
+          <option value="en">English</option>
+          <option value="am">አማርኛ (Amharic)</option>
+          <option value="om">Afaan Oromoo</option>
+        </select>
+      </div>
+      <button class="nav-cta" data-i18n="nav.cta" onclick="document.getElementById('scanner').scrollIntoView({behavior:'smooth'})">
+        🌿 Scan a Leaf
+      </button>
+      <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#hero" class="mobile-link">Home</a>
+    <a href="#how-it-works" class="mobile-link">How It Works</a>
+    <a href="#scanner" class="mobile-link">Scan Now</a>
+    <a href="#crops" class="mobile-link">Crops</a>
+    <a href="#about" class="mobile-link">About</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <img src="assets/hero_farm.png" alt="Ethiopian farmland" class="hero-img" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge" data-i18n="hero.badge"><span class="badge-dot"></span>AI-Powered · Built for Ethiopia</div>
+      <h1 class="hero-title" data-i18n="hero.title">Protect Your Crops<br/><span class="gradient-text">With AI Intelligence</span></h1>
+      <p class="hero-subtitle" data-i18n="hero.sub">Snap a photo of any plant leaf and get an instant AI diagnosis. Identify diseases in <strong>Teff, Maize, Wheat, Coffee</strong> — with treatment recommendations in seconds.</p>
+      <div class="hero-ctas">
+        <button class="btn-primary" data-i18n="hero.btn1" onclick="document.getElementById('scanner').scrollIntoView({behavior:'smooth'})">📸 Start Scanning</button>
+        <button class="btn-secondary" data-i18n="hero.btn2" onclick="document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'})">▶ How It Works</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-number">95%</span><span class="stat-label" data-i18n="stat.acc">Detection Accuracy</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-number">&lt;3s</span><span class="stat-label" data-i18n="stat.time">Analysis Time</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-number">20+</span><span class="stat-label" data-i18n="stat.dis">Diseases Detected</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-number">4</span><span class="stat-label" data-i18n="stat.crop">Ethiopian Crops</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="how.tag">Simple Process</span>
+        <h2 class="section-title" data-i18n="how.title">How AgroScan AI Works</h2>
+        <p class="section-subtitle" data-i18n="how.sub">From photo to treatment recommendation in just 4 easy steps</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card"><div class="step-icon">📸</div><div class="step-number">01</div><h3 data-i18n="how.step1">Take a Photo</h3><p data-i18n="how.step1b">Open the scanner and take a clear photo of the affected plant leaf or upload from your gallery.</p></div>
+        <div class="step-connector"></div>
+        <div class="step-card"><div class="step-icon">⚡</div><div class="step-number">02</div><h3 data-i18n="how.step2">AI Analysis</h3><p data-i18n="how.step2b">Our CNN model analyzes leaf color, spots, textures, and patterns using computer vision technology.</p></div>
+        <div class="step-connector"></div>
+        <div class="step-card"><div class="step-icon">🔬</div><div class="step-number">03</div><h3 data-i18n="how.step3">Disease Detected</h3><p data-i18n="how.step3b">Receive an instant diagnosis with confidence percentage and disease classification.</p></div>
+        <div class="step-connector"></div>
+        <div class="step-card"><div class="step-icon">💊</div><div class="step-number">04</div><h3 data-i18n="how.step4">Get Treatment</h3><p data-i18n="how.step4b">View detailed treatment options, prevention tips, and recommended pesticides or practices.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCANNER -->
+  <section class="scanner-section" id="scanner">
+    <div class="scanner-bg"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" style="color:#a3e635;" data-i18n="scan.tag">Live Diagnosis</span>
+        <h2 class="section-title" style="color:#fff;" data-i18n="scan.title">Scan Your Crop Leaf</h2>
+        <p class="section-subtitle" style="color:rgba(255,255,255,0.7);" data-i18n="scan.sub">Select a crop type, upload a leaf image, and let AI do the rest</p>
+      </div>
+      <div class="scanner-layout">
+        <div class="scanner-panel upload-panel">
+          <div class="panel-header"><span class="panel-icon">🌿</span><h3 data-i18n="scan.btn">Upload Leaf Image</h3></div>
+          <div class="crop-selector">
+            <label class="form-label" data-i18n="scan.cropSelect">Select Crop Type</label>
+            <div class="crop-tabs" id="cropTabs">
+              <button class="crop-tab active" data-crop="maize" id="tab-maize">🌽 Maize</button>
+              <button class="crop-tab" data-crop="wheat" id="tab-wheat">🌾 Wheat</button>
+              <button class="crop-tab" data-crop="coffee" id="tab-coffee">☕ Coffee</button>
+              <button class="crop-tab" data-crop="teff" id="tab-teff">🌿 Teff</button>
+            </div>
+          </div>
+          <div class="upload-zone" id="uploadZone">
+            <div class="upload-content" id="uploadContent">
+              <div class="upload-icon-wrap">
+                <div class="upload-icon">🍃</div>
+                <div class="upload-rings"><div class="ring ring-1"></div><div class="ring ring-2"></div><div class="ring ring-3"></div></div>
+              </div>
+              <p class="upload-main" data-i18n="scan.drop">Drop your leaf photo here</p>
+              <p class="upload-sub" data-i18n="scan.browse">or click to browse from your device</p>
+              <span class="upload-formats">Supports JPG, PNG, WEBP · Max 10MB</span>
+            </div>
+            <img id="previewImage" class="preview-image" alt="Leaf preview" />
+            <button id="removeImage" class="remove-btn" title="Remove image">✕</button>
+            <input type="file" id="fileInput" accept="image/*" hidden />
+          </div>
+          <button class="analyze-btn" id="analyzeBtn" disabled>
+            <span class="btn-icon">🔍</span>
+            <span class="btn-text" data-i18n="scan.btn">Analyze Leaf</span>
+            <span class="btn-loader" id="btnLoader"></span>
+          </button>
+          <p class="scanner-note">💡 <strong>Tip:</strong> For best results, take a clear photo in natural daylight of just the leaf.</p>
+        </div>
+
+        <div class="scanner-panel result-panel" id="resultPanel">
+          <div class="result-empty" id="resultEmpty">
+            <div class="empty-icon">🌱</div>
+            <p data-i18n="scan.empty">Upload a leaf to see your<br/>AI diagnosis here</p>
+          </div>
+          <div class="result-loading" id="resultLoading">
+            <div class="ai-brain"><div class="brain-pulse"></div><span class="brain-emoji">🧠</span></div>
+            <p class="loading-text">AI is analyzing your leaf...</p>
+            <div class="loading-steps" id="loadingSteps"><div class="loading-step">📸 Processing image...</div></div>
+          </div>
+          <div class="result-content" id="resultContent">
+            <div class="disease-header" id="diseaseHeader">
+              <div class="disease-icon" id="diseaseIcon">🍂</div>
+              <div class="disease-info">
+                <span class="disease-label" id="diseaseLabel">DISEASE DETECTED</span>
+                <h3 class="disease-name" id="diseaseName">Leaf Rust</h3>
+                <span class="crop-badge" id="cropBadge">🌾 Wheat</span>
+              </div>
+              <div class="confidence-ring" id="confidenceRing">
+                <svg viewBox="0 0 80 80" class="ring-svg">
+                  <circle cx="40" cy="40" r="34" class="ring-bg"/>
+                  <circle cx="40" cy="40" r="34" class="ring-fill" id="ringFill" stroke-dasharray="0 214"/>
+                </svg>
+                <div class="ring-text">
+                  <span class="ring-pct" id="ringPct">0%</span>
+                  <span class="ring-lbl">confidence</span>
+                </div>
+              </div>
+            </div>
+            <div class="severity-row">
+              <span class="severity-badge" id="severityBadge">⚠️ Moderate</span>
+              <span class="detected-at" id="detectedAt"></span>
+            </div>
+            <div class="result-tabs">
+              <button class="rtab active" data-rtab="cause" id="rtab-cause">Cause</button>
+              <button class="rtab" data-rtab="treatment" id="rtab-treatment">Treatment</button>
+              <button class="rtab" data-rtab="prevention" id="rtab-prevention">Prevention</button>
+            </div>
+            <div class="rtab-content" id="causeContent">
+              <div class="info-card"><h4>🔬 What Causes This?</h4><p id="causeText">Loading...</p></div>
+              <div class="info-card"><h4>🍂 Common Symptoms</h4><ul id="symptomsList"></ul></div>
+            </div>
+            <div class="rtab-content hidden" id="treatmentContent">
+              <div class="info-card"><h4>💊 Recommended Treatment</h4><ul id="treatmentList"></ul></div>
+              <div class="alert-box warning" id="urgencyBox"><span>⚠️</span><span id="urgencyText">Act quickly to prevent spread.</span></div>
+            </div>
+            <div class="rtab-content hidden" id="preventionContent">
+              <div class="info-card"><h4>🛡️ Prevention Tips</h4><ul id="preventionList"></ul></div>
+            </div>
+            <div class="result-actions">
+              <button class="action-btn primary" onclick="resetScanner()" data-i18n="scan.new">📸 New Scan</button>
+              <button class="action-btn secondary" id="saveReportBtn" data-i18n="scan.save">💾 Save Report</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CROPS -->
+  <section class="crops-section" id="crops">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Coverage</span>
+        <h2 class="section-title">Supported Ethiopian Crops</h2>
+        <p class="section-subtitle">AgroScan AI recognizes diseases in the most important crops grown across Ethiopia</p>
+      </div>
+      <div class="crops-grid">
+        <div class="crop-card">
+          <div class="crop-emoji">🌽</div><h3 class="crop-name">Maize</h3><p class="crop-amharic">በቆሎ</p>
+          <div class="crop-diseases"><span class="disease-tag">Gray Leaf Spot</span><span class="disease-tag">N. Corn Blight</span><span class="disease-tag">Common Rust</span><span class="disease-tag">Ear Rot</span></div>
+          <div class="crop-accuracy"><span class="acc-label">Accuracy</span><div class="acc-bar"><div class="acc-fill" style="width:94%"></div></div><span class="acc-pct">94%</span></div>
+        </div>
+        <div class="crop-card">
+          <div class="crop-emoji">🌾</div><h3 class="crop-name">Wheat</h3><p class="crop-amharic">ስንዴ</p>
+          <div class="crop-diseases"><span class="disease-tag">Leaf Rust</span><span class="disease-tag">Stem Rust</span><span class="disease-tag">Yellow Rust</span><span class="disease-tag">Septoria</span></div>
+          <div class="crop-accuracy"><span class="acc-label">Accuracy</span><div class="acc-bar"><div class="acc-fill" style="width:96%"></div></div><span class="acc-pct">96%</span></div>
+        </div>
+        <div class="crop-card">
+          <div class="crop-emoji">🌿</div><h3 class="crop-name">Teff</h3><p class="crop-amharic">ጤፍ</p>
+          <div class="crop-diseases"><span class="disease-tag">Leaf Blotch</span><span class="disease-tag">Head Smut</span><span class="disease-tag">Stagonospora</span><span class="disease-tag">Blast</span></div>
+          <div class="crop-accuracy"><span class="acc-label">Accuracy</span><div class="acc-bar"><div class="acc-fill" style="width:91%"></div></div><span class="acc-pct">91%</span></div>
+        </div>
+        <div class="crop-card">
+          <div class="crop-emoji">☕</div><h3 class="crop-name">Coffee</h3><p class="crop-amharic">ቡና</p>
+          <div class="crop-diseases"><span class="disease-tag">Berry Disease</span><span class="disease-tag">Leaf Rust</span><span class="disease-tag">Wilt</span><span class="disease-tag">Anthracnose</span></div>
+          <div class="crop-accuracy"><span class="acc-label">Accuracy</span><div class="acc-bar"><div class="acc-fill" style="width:93%"></div></div><span class="acc-pct">93%</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <span class="section-tag">The Technology</span>
+          <h2 class="section-title" style="text-align:left;">Built with Cutting-Edge<br/>AI &amp; Computer Vision</h2>
+          <p style="color:var(--text-muted); line-height:1.8; margin-bottom:2rem;">AgroScan AI uses <strong>Convolutional Neural Networks (CNN)</strong> with transfer learning from <strong>EfficientNet</strong> for high-accuracy detection, even on low-quality mobile images.</p>
+          <div class="tech-stack">
+            <div class="tech-item"><span>🧠</span><span>EfficientNet / MobileNet</span></div>
+            <div class="tech-item"><span>⚡</span><span>FastAPI Backend</span></div>
+            <div class="tech-item"><span>🔥</span><span>PyTorch / TensorFlow</span></div>
+            <div class="tech-item"><span>👁️</span><span>OpenCV Vision</span></div>
+            <div class="tech-item"><span>📱</span><span>Mobile-First Design</span></div>
+            <div class="tech-item"><span>🌍</span><span>Amharic Support</span></div>
+          </div>
+        </div>
+        <div class="about-visual">
+          <div class="arch-diagram">
+            <div class="arch-node"><div class="arch-icon">📱</div><span>Mobile App</span><small>Camera / Upload</small></div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node api-node"><div class="arch-icon">⚡</div><span>FastAPI</span><small>Python Server</small></div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node ai-node"><div class="arch-icon">🧠</div><span>AI Model</span><small>CNN / EfficientNet</small></div>
+            <div style="grid-column:1/-1; text-align:center; color:var(--primary); font-size:1.5rem;">↓</div>
+            <div class="arch-node" style="grid-column:1/-1; max-width:200px; margin:0 auto;"><div class="arch-icon">🗄️</div><span>Database</span><small>Results &amp; History</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.png" alt="AgroScan AI" class="footer-logo"/><span class="footer-name">AgroScan AI</span>
+          <p class="footer-desc">AI-powered crop disease detection built for Ethiopian farmers. Protecting harvests, one leaf at a time.</p>
+          <div class="footer-badges"><span class="f-badge">🇪🇹 Made for Ethiopia</span><span class="f-badge">🌿 Eco-Friendly</span></div>
+        </div>
+        <div class="footer-links"><h4>Quick Links</h4><a href="#hero">Home</a><a href="#scanner">Scan Now</a><a href="#how-it-works">How It Works</a><a href="#crops">Crops</a></div>
+        <div class="footer-links"><h4>Crops</h4><a href="#crops">🌽 Maize (በቆሎ)</a><a href="#crops">🌾 Wheat (ስንዴ)</a><a href="#crops">🌿 Teff (ጤፍ)</a><a href="#crops">☕ Coffee (ቡና)</a></div>
+        <div class="footer-links"><h4>Diseases</h4><a href="#">Leaf Rust</a><a href="#">Gray Leaf Spot</a><a href="#">Coffee Berry Disease</a><a href="#">Head Smut</a></div>
+      </div>
+      <div class="footer-bottom"><p>© 2025 AgroScan AI · Built with ❤️ for Ethiopian Farmers</p><p style="color:var(--text-muted); font-size:0.8rem;">Powered by AI/ML · FastAPI · TensorFlow</p></div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

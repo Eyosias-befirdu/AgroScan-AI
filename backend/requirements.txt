@@ -1,0 +1,25 @@
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+Pillow>=10.0.0
+
+# PostgreSQL async driver
+asyncpg>=0.29.0
+
+# SQLAlchemy async ORM
+SQLAlchemy>=2.0.0
+
+# .env file support
+python-dotenv>=1.0.0
+
+# ── Real AI Model ──────────────────────────────────────────
+# HuggingFace Transformers for loading pre-trained plant disease model
+transformers>=4.38.0
+
+# PyTorch (CPU-only — swap for GPU wheel if you have a CUDA GPU)
+torch>=2.2.0
+torchvision>=0.17.0
+
+# Chatbot Integration
+google-genai>=1.67.0
+pydantic>=2.9.0
