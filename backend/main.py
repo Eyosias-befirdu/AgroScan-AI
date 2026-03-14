@@ -20,6 +20,10 @@ import uuid
 import io
 from datetime import datetime
 from typing import Optional
+import os
+import json
+from pydantic import BaseModel
+from google import genai
 
 # PIL (optional)
 try:
@@ -498,7 +502,7 @@ async def predict_disease(
                 }
                 
                 resp = client.models.generate_content(
-                    model='gemini-2.5-flash',
+                    model='gemini-1.5-flash',
                     contents=f"Translate the values of this JSON object exactly into {lang_name}. Do NOT translate the keys. Respond ONLY with valid JSON and no markdown formatting: {json.dumps(text_to_translate)}"
                 )
                 
@@ -510,7 +514,9 @@ async def predict_disease(
                     if key in result:
                         result[key] = translated_dict[key]
             except Exception as e:
-                print(f"Translation failed: {e}")
+                print(f"Translation Error: {e}")
+                # Don't fail the whole request if translation fails, just log it
+                pass
 
     # ── Persist to PostgreSQL ───────────────────────────────
     row = ScanResult(
@@ -698,10 +704,6 @@ async def delete_scan(scan_id: str, db: AsyncSession = Depends(get_db)):
 # --------------------------------------------------------
 # Chatbot Integration
 # --------------------------------------------------------
-from pydantic import BaseModel
-import os
-from google import genai
-
 class ChatRequest(BaseModel):
     message: str
     language: str = "english"
@@ -726,7 +728,7 @@ async def chat_with_bot(request: ChatRequest):
         )
 
         response = client.models.generate_content(
-            model='gemini-2.5-flash',
+            model='gemini-1.5-flash',
             contents=request.message,
             config=genai.types.GenerateContentConfig(
                 system_instruction=system_instruction,
@@ -735,4 +737,5 @@ async def chat_with_bot(request: ChatRequest):
         )
         return {"response": response.text}
     except Exception as e:
+        print(f"Chatbot Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))

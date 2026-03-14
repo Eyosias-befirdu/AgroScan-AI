@@ -163,8 +163,9 @@ function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + m
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 // ---- Configuration ----
-// CHANGE THIS to your deployed backend URL when hosting on the internet (e.g. "https://your-backend.onrender.com")
-const API_BASE_URL = "https://agroscan-ai.onrender.com";
+const API_BASE_URL = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+  ? "http://localhost:8000"
+  : "https://agroscan-ai.onrender.com";
 
 // ---- State ----
 let selectedCrop = "maize";
@@ -598,7 +599,8 @@ const initChatbot = () => {
             }
         } catch (error) {
             loadingDiv.remove();
-            appendMessage("Network error. Please try again.", "bot");
+            console.error("Chatbot Fetch Error:", error);
+            appendMessage("Network error. Please ensure your backend is running at " + API_BASE_URL, "bot");
         }
     };
 
@@ -608,7 +610,11 @@ const initChatbot = () => {
     });
 };
 
-document.addEventListener("DOMContentLoaded", initChatbot);
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initChatbot);
+} else {
+    initChatbot();
+}
 
 // ---- Animate accuracy bars on scroll ----
 const accFills = document.querySelectorAll(".acc-fill");
