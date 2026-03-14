@@ -162,6 +162,10 @@ const HEALTHY = {
 function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+// ---- Configuration ----
+// CHANGE THIS to your deployed backend URL when hosting on the internet (e.g. "https://your-backend.onrender.com")
+const API_BASE_URL = "http://localhost:8000";
+
 // ---- State ----
 let selectedCrop = "maize";
 let hasImage = false;
@@ -343,7 +347,7 @@ async function runAnalysis() {
     formData.append("crop", selectedCrop);
     formData.append("lang", currentLang || "en");
 
-    const apiCall = await fetch("http://localhost:8000/predict", {
+    const apiCall = await fetch(`${API_BASE_URL}/predict`, {
       method: "POST",
       body: formData,
     });
@@ -574,7 +578,7 @@ const initChatbot = () => {
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
         try {
-            const response = await fetch("http://localhost:8000/chat", {
+            const response = await fetch(`${API_BASE_URL}/chat`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
