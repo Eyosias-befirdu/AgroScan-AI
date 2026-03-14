@@ -164,7 +164,7 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 // ---- Configuration ----
 // CHANGE THIS to your deployed backend URL when hosting on the internet (e.g. "https://your-backend.onrender.com")
-const API_BASE_URL = "http://localhost:8000";
+const API_BASE_URL = "https://agroscan-ai.onrender.com";
 
 // ---- State ----
 let selectedCrop = "maize";
