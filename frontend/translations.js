@@ -16,7 +16,7 @@ const TRANSLATIONS = {
         "stat.dis": "Diseases Detected",
         "stat.crop": "Ethiopian Crops",
         "how.tag": "Simple Process",
-        "how.title": "How AgroScan AI Works",
+        "how.title": "How Agricultural Disease Scan Works",
         "how.sub": "From photo to treatment recommendation in just 4 easy steps",
         "how.step1": "Take a Photo",
         "how.step1b": "Open the scanner and take a clear photo of the affected plant leaf.",
@@ -37,7 +37,7 @@ const TRANSLATIONS = {
         "scan.empty": "Upload a leaf to see your<br/>AI diagnosis here",
         "scan.new": "📸 New Scan",
         "scan.save": "💾 Save Report",
-        "chat.title": "🌿 AgroBot",
+        "chat.title": "🌿 AgriDisease Bot",
         "chat.placeholder": "Ask about crop diseases...",
         "chat.hello": "Hello! I am your AI Agricultural Assistant. How can I help you with your crops today?"
     },
@@ -58,7 +58,7 @@ const TRANSLATIONS = {
         "stat.dis": "የተለዩ በሽታዎች",
         "stat.crop": "የኢትዮጵያ ሰብሎች",
         "how.tag": "ቀላል ሂደት",
-        "how.title": "AgroScan AI እንዴት እንደሚሰራ",
+        "how.title": "Agricultural Disease Scan እንዴት እንደሚሰራ",
         "how.sub": "ከፎቶ እስከ ህክምና ምክር በ 4 ቀላል ደረጃዎች",
         "how.step1": "ፎቶ ያንሱ",
         "how.step1b": "ስካነሩን ይክፈቱ እና የተጎዳውን የተክል ቅጠል ግልጽ ፎቶ ያንሱ።",
@@ -79,7 +79,7 @@ const TRANSLATIONS = {
         "scan.empty": "የ AI ምርመራዎን ለማየት<br/>ቅጠል ይስቀሉ",
         "scan.new": "📸 አዲስ ቅኝት",
         "scan.save": "💾 ሪፖርት ያስቀምጡ",
-        "chat.title": "🌿 አግሮ-ቦት",
+        "chat.title": "🌿 አግሪ-ዲዚዝ ቦት",
         "chat.placeholder": "ስለ ሰብል በሽታዎች ይጠይቁ...",
         "chat.hello": "ሰላም! እኔ የእርስዎ አርቲፊሻል ኢንተለጀንስ የግብርና ረዳት ነኝ። ዛሬ በሰብልዎ ላይ እንዴት ልረዳዎ እችላለሁ?"
     },
@@ -100,7 +100,7 @@ const TRANSLATIONS = {
         "stat.dis": "Dhukkuboota Argaman",
         "stat.crop": "Midhaan Itoophiyaa",
         "how.tag": "Adeemsa Salphaa",
-        "how.title": "AgroScan AI Akkamitti Hojjeta",
+        "how.title": "Agricultural Disease Scan Akkamitti Hojjeta",
         "how.sub": "Suuraa irraa hanga yaada yaaliitti tarkaanfilee 4 salphaan",
         "how.step1": "Suuraa Kaasi",
         "how.step1b": "Qorattuu banii suuraa baala dhukkubsate sirriitti kaasi.",
@@ -121,7 +121,7 @@ const TRANSLATIONS = {
         "scan.empty": "Qorannoo AI kee arguuf<br/>baala olkaa'i",
         "scan.new": "📸 Qorannoo Haaraa",
         "scan.save": "💾 Rifoortii Olkaa'i",
-        "chat.title": "🌿 Agro-Bootii",
+        "chat.title": "🌿 AgriDisease Bootii",
         "chat.placeholder": "Waa'ee dhukkuboota midhaanii gaafadhu...",
         "chat.hello": "Akkam! Ani gargaaraa qonnaa AI keeti. Har'a midhaan kee ilaalchisee ammamittan si gargaaruu danda'a?"
     }

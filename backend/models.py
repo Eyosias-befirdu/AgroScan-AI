@@ -1,5 +1,5 @@
 """
-AgroScan AI – SQLAlchemy ORM Models
+Agricultural Disease Scan – SQLAlchemy ORM Models
 =====================================
 Defines all database tables. Tables are auto-created by init_db() on startup.
 """

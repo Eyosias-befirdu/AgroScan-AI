@@ -1,5 +1,5 @@
 """
-AgroScan AI – Database Configuration
+Agricultural Disease Scan – Database Configuration
 =====================================
 Async SQLAlchemy with PostgreSQL via asyncpg.
 """
@@ -14,7 +14,7 @@ load_dotenv()
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql+asyncpg://postgres:admin123@localhost:5432/agroscan"
+    "postgresql+asyncpg://postgres:admin123@localhost:5432/agridisease"
 )
 
 engine = create_async_engine(

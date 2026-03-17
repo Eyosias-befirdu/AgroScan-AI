@@ -1,14 +1,14 @@
-# AgroScan AI – README
+# Agricultural Disease Scan – README
 ## AI Crop Disease Detection for Ethiopian Farmers 🇪🇹🌿
 
-AgroScan AI is a full-stack web application that uses computer vision AI to detect crop diseases from leaf images. Built specifically for Ethiopian farmers growing Teff, Maize, Wheat, and Coffee.
+Agricultural Disease Scan is a full-stack web application that uses computer vision AI to detect crop diseases from leaf images. Built specifically for Ethiopian farmers growing Teff, Maize, Wheat, and Coffee.
 
 ---
 
 ## Project Structure
 
 ```
-agroscan-ai/
+agricultural-disease-scan/
 ├── frontend/
 │   ├── index.html       ← Main web page (all sections)
 │   ├── style.css        ← Dark theme, glassmorphism, animations

@@ -1,5 +1,5 @@
 """
-AgroScan AI – Real AI Inference Engine
+Agricultural Disease Scan – Real AI Inference Engine
 ========================================
 Uses a pre-trained MobileNetV2 model from HuggingFace
 (linkanjarad/mobilenet_v2_1.0_224-plant-disease-identification)
@@ -31,7 +31,7 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 # ──────────────────────────────────────────────────────────────────────────────
-# PlantVillage → AgroScan label mapping
+# PlantVillage → Agricultural Disease Scan label mapping
 # Keys  : exact label strings from the HuggingFace model config
 # Values: (canonical_crop, canonical_disease_name)
 #          canonical_disease_name == "Healthy Leaf" → healthy result
@@ -237,5 +237,5 @@ def _smart_mock(crop: str, disease_db: dict, healthy_result: dict) -> dict:
         "urgency":          detail["urgency"],
         "affected_regions": detail.get("affected_regions", []),
         "is_healthy":       detail["name"] == "Healthy Leaf",
-        "model":            "AgroScan-SmartMock",
+        "model":            "AgriDisease-SmartMock",
     }

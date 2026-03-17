@@ -1,5 +1,5 @@
 """
-AgroScan AI – FastAPI Backend
+Agricultural Disease Scan – FastAPI Backend
 ==============================
 Crop disease detection API backed by PostgreSQL for persistent history & stats.
 Uses a real pre-trained MobileNetV2 model (PlantVillage) for Maize & Wheat;
@@ -40,7 +40,7 @@ import ai_model  # real inference engine
 # App Configuration
 # ============================================================
 app = FastAPI(
-    title="AgroScan AI API",
+    title="Agricultural Disease Scan API",
     description="AI-powered crop disease detection for Ethiopian farmers",
     version="2.0.0",
     docs_url="/docs",
@@ -412,7 +412,7 @@ def run_predict(image_bytes: bytes, crop: str) -> dict:
 async def root():
     db_ok = await check_db_connection()
     return {
-        "service":     "AgroScan AI API",
+        "service":     "Agricultural Disease Scan API",
         "version":     "2.0.0",
         "status":      "running",
         "database":    "connected" if db_ok else "disconnected",
@@ -722,7 +722,7 @@ async def chat_with_bot(request: ChatRequest):
         client = genai.Client(api_key=api_key)
         
         system_instruction = (
-            "You are AgroScan AI's helpful agricultural assistant. You help Ethiopian farmers understand crop diseases, "
+            "You are Agricultural Disease Scan's helpful agricultural assistant. You help Ethiopian farmers understand crop diseases, "
             "treatments, and best farming practices. Keep your answers concise, practical, and highly relevant to Ethiopian agriculture. "
             f"You MUST respond exclusively in the following language: {request.language}."
         )
