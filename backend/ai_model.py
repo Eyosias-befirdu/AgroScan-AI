@@ -30,6 +30,66 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
+_yolo_model = None
+
+def _load_yolo():
+    global _yolo_model
+    if _yolo_model is not None:
+        return _yolo_model
+    try:
+        from ultralytics import YOLO
+        logger.info("🔄  Loading YOLOv8 object detector for leaf verification…")
+        # Downloads yolov8n.pt natively. Swappable with a custom leaf detector.
+        _yolo_model = YOLO("yolov8n.pt") 
+    except ImportError:
+        logger.warning("ultralytics not installed. Skipping YOLO verification.")
+        _yolo_model = None
+    except Exception as exc:
+        logger.error(f"❌  YOLO load failed: {exc}")
+        _yolo_model = None
+    return _yolo_model
+
+
+def _verify_is_leaf(image_bytes: bytes) -> tuple[bool, str]:
+    if not PIL_AVAILABLE:
+        return True, ""
+        
+    yolo = _load_yolo()
+    if yolo is None:
+        return True, ""
+        
+    try:
+        img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+        results = yolo(img, verbose=False)
+        if not results or len(results[0].boxes) == 0:
+            return True, ""
+            
+        detected = []
+        for box in results[0].boxes:
+            conf = float(box.conf[0].item())
+            if conf > 0.4:
+                cls_id = int(box.cls[0].item())
+                detected.append(str(yolo.names[cls_id]).lower())
+                
+        names = [str(v).lower() for v in getattr(yolo, 'names', {}).values()]
+        
+        # 1. Custom detector checks: if the model has a 'leaf' class, it MUST be detected
+        if "leaf" in names:
+            if "leaf" not in detected:
+                return False, "No leaf detected in the image."
+            return True, ""
+            
+        # 2. Standard YOLO COCO: block selfie junk and random items
+        acceptable_coco = {"potted plant", "vase", "apple", "orange", "broccoli", "carrot", "bird", "cow", "sheep"}
+        for item in detected:
+            if item not in acceptable_coco:
+                return False, f"Detected a '{item}'. Please upload a clear picture of a leaf, not a {item}."
+                
+        return True, ""
+    except Exception as e:
+        logger.error(f"YOLO verification error: {e}")
+        return True, ""
+
 # ──────────────────────────────────────────────────────────────────────────────
 # PlantVillage → Agricultural Disease Scan label mapping
 # Keys  : exact label strings from the HuggingFace model config
@@ -122,6 +182,11 @@ def predict(
     """
     import uuid
     from datetime import datetime
+
+    # ── Object Detection (YOLO) verification ──────────────────────────────────
+    is_leaf, reason = _verify_is_leaf(image_bytes)
+    if not is_leaf:
+        raise ValueError(reason)
 
     # ── Mock path for crops not in PlantVillage ───────────────────────────────
     if crop in MOCK_ONLY_CROPS:

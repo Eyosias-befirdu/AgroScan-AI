@@ -23,3 +23,6 @@ torchvision>=0.17.0
 # Chatbot Integration
 google-genai>=1.67.0
 pydantic>=2.9.0
+
+# YOLOv8 object detection (Leaf verification)
+ultralytics>=8.4.0

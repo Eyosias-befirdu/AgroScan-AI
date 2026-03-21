@@ -12,6 +12,7 @@ Run with:
 from fastapi import FastAPI, UploadFile, File, HTTPException, Form, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from starlette.concurrency import run_in_threadpool
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, desc
 import random
@@ -23,6 +24,7 @@ from typing import Optional
 import os
 import json
 from pydantic import BaseModel
+from enum import Enum
 from google import genai
 
 # PIL (optional)
@@ -466,6 +468,9 @@ async def predict_disease(
             detail="Please upload a valid image file (JPG, PNG, WEBP)"
         )
 
+    if file.size and file.size > 10 * 1024 * 1024:
+        raise HTTPException(status_code=413, detail="Image too large. Maximum size is 10MB.")
+
     image_data = await file.read()
     if len(image_data) > 10 * 1024 * 1024:
         raise HTTPException(status_code=413, detail="Image too large. Maximum size is 10MB.")
@@ -477,46 +482,14 @@ async def predict_disease(
         except Exception:
             raise HTTPException(status_code=400, detail="Invalid or corrupted image file.")
 
-    # ── Real AI inference (PlantVillage model for maize/wheat;
-    #    smart mock for teff/coffee) ──────────────────────────
-    result = run_predict(image_data, crop.lower())
+    # ── Real AI inference + YOLO Object verification ──────────────────
+    try:
+        result = await run_in_threadpool(run_predict, image_data, crop.lower())
+    except ValueError as ve:
+        raise HTTPException(status_code=400, detail=str(ve))
+
     result["filename"]     = file.filename
     result["file_size_kb"] = round(len(image_data) / 1024, 1)
-
-    # ── Dynamic AI Translation for Non-English ──────────────
-    if lang.lower() in ["am", "om"]:
-        lang_name = "Amharic" if lang.lower() == "am" else "Afaan Oromoo"
-        api_key = os.getenv("GEMINI_API_KEY")
-        if api_key:
-            try:
-                import json
-                client = genai.Client(api_key=api_key)
-                text_to_translate = {
-                    "disease_name": result["disease_name"],
-                    "severity": result["severity"],
-                    "cause": result["cause"],
-                    "symptoms": result["symptoms"],
-                    "treatment": result["treatment"],
-                    "prevention": result["prevention"],
-                    "urgency": result["urgency"],
-                }
-                
-                resp = client.models.generate_content(
-                    model='gemini-1.5-flash',
-                    contents=f"Translate the values of this JSON object exactly into {lang_name}. Do NOT translate the keys. Respond ONLY with valid JSON and no markdown formatting: {json.dumps(text_to_translate)}"
-                )
-                
-                # Clean up response payload to parse JSON
-                raw_json = resp.text.strip().removeprefix('```json').removesuffix('```').strip()
-                translated_dict = json.loads(raw_json)
-                
-                for key in translated_dict:
-                    if key in result:
-                        result[key] = translated_dict[key]
-            except Exception as e:
-                print(f"Translation Error: {e}")
-                # Don't fail the whole request if translation fails, just log it
-                pass
 
     # ── Persist to PostgreSQL ───────────────────────────────
     row = ScanResult(
@@ -539,8 +512,45 @@ async def predict_disease(
     )
     db.add(row)
     await db.flush()   # get server-generated created_at without closing tx
+    await db.refresh(row, attribute_names=["created_at"])
     result["timestamp"] = row.created_at.isoformat() if row.created_at else result["timestamp"]
     # ──────────────────────────────────────────────────────────
+
+    # ── Dynamic AI Translation for Non-English ──────────────
+    if lang.lower() in ["am", "om"]:
+        lang_name = "Amharic" if lang.lower() == "am" else "Afaan Oromoo"
+        api_key = os.getenv("GEMINI_API_KEY")
+        if api_key:
+            try:
+                import json
+                client = genai.Client(api_key=api_key)
+                text_to_translate = {
+                    "disease_name": result["disease_name"],
+                    "severity": result["severity"],
+                    "cause": result["cause"],
+                    "symptoms": result["symptoms"],
+                    "treatment": result["treatment"],
+                    "prevention": result["prevention"],
+                    "urgency": result["urgency"],
+                }
+                
+                resp = await run_in_threadpool(
+                    client.models.generate_content,
+                    model='gemini-1.5-flash',
+                    contents=f"Translate the values of this JSON object exactly into {lang_name}. Do NOT translate the keys. Respond ONLY with valid JSON and no markdown formatting: {json.dumps(text_to_translate)}"
+                )
+                
+                # Clean up response payload to parse JSON
+                raw_json = resp.text.strip().removeprefix('```json').removesuffix('```').strip()
+                translated_dict = json.loads(raw_json)
+                
+                for key in translated_dict:
+                    if key in result:
+                        result[key] = translated_dict[key]
+            except Exception as e:
+                print(f"Translation Error: {e}")
+                # Don't fail the whole request if translation fails, just log it
+                pass
 
     return JSONResponse(content=result)
 
@@ -704,9 +714,14 @@ async def delete_scan(scan_id: str, db: AsyncSession = Depends(get_db)):
 # --------------------------------------------------------
 # Chatbot Integration
 # --------------------------------------------------------
+class SupportedLang(str, Enum):
+    en = "english"
+    am = "amharic"
+    om = "afaan oromoo"
+
 class ChatRequest(BaseModel):
     message: str
-    language: str = "english"
+    language: SupportedLang = SupportedLang.en
 
 @app.post("/chat", tags=["Chatbot"])
 async def chat_with_bot(request: ChatRequest):
@@ -724,10 +739,11 @@ async def chat_with_bot(request: ChatRequest):
         system_instruction = (
             "You are Agricultural Disease Scan's helpful agricultural assistant. You help Ethiopian farmers understand crop diseases, "
             "treatments, and best farming practices. Keep your answers concise, practical, and highly relevant to Ethiopian agriculture. "
-            f"You MUST respond exclusively in the following language: {request.language}."
+            f"You MUST respond exclusively in the following language: {request.language.value}."
         )
 
-        response = client.models.generate_content(
+        response = await run_in_threadpool(
+            client.models.generate_content,
             model='gemini-1.5-flash',
             contents=request.message,
             config=genai.types.GenerateContentConfig(
